@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Generate the letters</title>
+    <meta charset="UTF-8">
+    <link href='http://fonts.googleapis.com/css?family=Sue+Ellen+Francisco' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Lobster&subset=cyrillic" rel="stylesheet">    
+    <link href="https://fonts.googleapis.com/css?family=Neucha&subset=cyrillic" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:700,800&amp;subset=cyrillic" rel="stylesheet">    
+	
+	<link href="https://fonts.googleapis.com/css?family=B612+Mono:700" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+        font-family: 'B612 Mono', cursive;
+        font-weight: 800;
+      }
+      image {
+      	width: 50%;
+      	text-align: center;
+      }
+      canvas{
+      	width: 55mm;
+      	height: 80mm;
+      	padding:2px;
+      }
+    </style>
+  </head>
+<body>
+	<div class="image_wrapper">
+		
+	</div>
+<script>
+rec_width = 550;
+rec_height = 800;
+
+var imageObj = new Image();
+
+var letters = ["A", "B", "C", "D","E","F", "G", "H", "I", "J", "K", "L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+
+window.onload = function() {
+  for (i = 0; i < letters.length; i++) { 
+    var cnvx = '<canvas id="img' + i + '" width="550px" height="800px"></canvas>';
+    $('div.image_wrapper').append(cnvx);
+    var canvas = document.getElementById('img' + i);
+    var context = canvas.getContext('2d');
+    context.rect(0, 0, rec_width, rec_height);
+	context.stroke();
+
+    letter = letters[i]
+    //TDB :  make it generic! 
+    pos_x = 30;
+    pos_y = 700;
+
+    addLetter(context,letter, pos_x, pos_y);
+
+    function addLetter(context, letter, x, y){
+      var font_size = 780;
+      if(letter.length>15){
+        font_size = font_size - 2 * (letter.length-15);
+      }
+      context.font= font_size + "px 'B612 Mono'";
+      context.strokeStyle = 'black'
+      context.lineWidth = 6;
+      context.drawImage(imageObj, 0, 0);
+
+      context.strokeText(letter, x, y);
+      console.log(" text: " + letter + "  length: " + letter.length + " size: " + context.font + "   location x:y= " + x + ":" + y);
+    }
+
+    //This will store each letter into image file. 
+      // var dataURL = canvas.toDataURL();
+      //         $.ajax({
+      //           type: "POST",
+      //           url: "http://localhost/letters_for_alisa/saveme.php",
+      //           data: { 
+      //              data: dataURL,
+      //              id: letter
+      //           }
+      //         }).done(function(o) {
+      //           console.log(o);
+      //           console.log('posted'); 
+      //           console.log(' id =' + letter );
+      //           console.log(' data ' + dataURL.substring(0,100));
+      //           // console.log(dataURL);
+      //           // If you want the file to be visible in the browser 
+      //           // - please modify the callback in javascript. All you
+      //           // need is to return the url to the file, you just saved 
+      //           // and then put the image in your browser.
+      //         });
+  }
+};
+</script>
+</body>
+</html>
